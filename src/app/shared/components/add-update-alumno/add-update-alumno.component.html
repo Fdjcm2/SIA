@@ -1,0 +1,68 @@
+<app-header [isModal]="true" [title]="alumno ? 'Actualizar Alumno' : 'Agregar Alumno'"></app-header>
+<ion-content>
+  <form [formGroup]="form" class="ion-padding ion-text-center" (ngSubmit)="submit()">
+
+    <!-- ===== Si existe una imagen ====== -->
+    <ion-avatar *ngIf="form.value.image">
+      <img [src]="form.value.image">
+    </ion-avatar>
+
+    <!-- ===== Si no existe una imagen ====== -->
+    <ion-icon *ngIf="!form.value.image" class="image-icon" name="image-outline"></ion-icon>
+    <br>
+    <!-- ==== Tomar/Seleccionar una Imagen ==== -->
+    <ion-button (click)="takeImage()" size="small" mode="ios" shape="round">Tomar/Seleccionar</ion-button>
+
+    <!-------------- Nombre ------------->
+    <app-custom-input autocomplete="nombre" icon="person-outline" [control]="form.controls.nombre" type="text"
+      label="Nombre:">
+    </app-custom-input>
+    <div class="validators" *ngIf="form.controls.nombre && form.controls.nombre.touched">
+      <div *ngIf="form.controls.nombre.errors?.['required']">El nombre es requerido</div>
+      <div *ngIf="form.controls.nombre.errors?.['minlength']">El nombre debe tener al menos 4 caracteres</div>
+      <div *ngIf="form.controls.nombre.errors?.['nameInvalid']">El nombre solo debe contener letras y espacios</div>
+    </div>
+
+    <!-------------- Fecha de Nacimiento ------------->
+    <app-custom-input autocomplete="bday" icon="calendar-outline" [control]="form.controls.fechadenac" type="date"
+      label="Fecha de Nacimiento:">
+    </app-custom-input>
+    <div class="validators" *ngIf="form.controls.fechadenac && form.controls.fechadenac.touched">
+      <div *ngIf="form.controls.fechadenac.errors?.['required']">La fecha de nacimiento es requerida</div>
+      <div *ngIf="form.controls.fechadenac.errors?.['dateInvalid']">Ingresa una fecha valida
+      </div>
+    </div>
+
+    <!-------------- Matrícula ------------->
+    <app-custom-input autocomplete="off" icon="barcode-outline" [control]="form.controls.matricula" type="text"
+      label="Matrícula:">
+    </app-custom-input>
+    <div class="validators" *ngIf="form.controls.matricula && form.controls.matricula.touched">
+      <div *ngIf="form.controls.matricula.errors?.['required']">La matrícula es requerida</div>
+      <div *ngIf="form.controls.matricula.errors?.['minlength']">La matrícula debe tener al menos 4 caracteres
+      </div>
+    </div>
+
+    <!-------------- Grado ------------->
+    <app-custom-input autocomplete="off" icon="school-outline" [control]="form.controls.grupo" type="text"
+      label="Grupo:">
+    </app-custom-input>
+    <div class="validators" *ngIf="form.controls.grupo && form.controls.grupo.touched">
+      <div *ngIf="form.controls.grupo.errors?.['required']">El grado es requerido</div>
+    </div>
+
+    <!-------------- Email ------------->
+    <app-custom-input autocomplete="email" icon="mail-outline" [control]="form.controls.email" type="email"
+      label="Correo:">
+    </app-custom-input>
+    <div class="validators" *ngIf="form.controls.email && form.controls.email.touched">
+      <div *ngIf="form.controls.email.errors?.['required']">El correo es requerido</div>
+      <div *ngIf="form.controls.email.errors?.['email']">Ingrese un correo válido</div>
+    </div>
+
+    <ion-button mode="ios" class="ion-margin" type="submit" [disabled]="form.invalid">
+      {{ alumno ? 'Actualizar Alumno' : 'Agregar Alumno' }}
+      <ion-icon slot="end" name="checkmark-circle-outline"></ion-icon>
+    </ion-button>
+  </form>
+</ion-content>

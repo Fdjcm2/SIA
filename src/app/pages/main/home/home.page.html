@@ -1,0 +1,48 @@
+<app-header title="Inicio"></app-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar [debounce]="500" (ionInput)="handleInput($event)"></ion-searchbar>
+
+  <ion-list>
+    <ion-item-sliding class="product-item" *ngFor="let a of filteredAlumnos">
+      <ion-item>
+        <ion-avatar slot="start">
+          <img [src]="a.image">
+        </ion-avatar>
+        <ion-label>
+          <div class="name">{{ a.nombre }}</div>
+          <div class="data">
+            <strong>Grupo: </strong>{{ a.grupo }} <strong> || </strong>
+            <strong>Matricula: </strong> {{ a.matricula }} <br>
+            <strong>Fecha de Nacimiento: </strong> {{ a.fechadenac}} <br>
+            <strong>Email: </strong> {{ a.email }}
+          </div>
+        </ion-label>
+      </ion-item>
+
+      <!-- ======= Opciones ====== -->
+      <ion-item-options>
+        <!-- Editar -->
+        <ion-item-option (click)="addUpdateAlumno(a)">
+          <ion-icon class="option-btn" name="create-outline"></ion-icon>
+        </ion-item-option>
+        <!-- Eliminar -->
+        <ion-item-option (click)="confirmDeleteAlumno(a)" color="danger">
+          <ion-icon class="option-btn" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+
+  <!-- ==== Nuevo Producto ==== -->
+  <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    <ion-fab-button (click)="addUpdateAlumno()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
